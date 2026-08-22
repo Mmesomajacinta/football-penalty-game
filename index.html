@@ -1,11 +1,186 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Football Penalty Game</title>
-</head>
-<body>
-  <h1>⚽ Mmesoma's Football Penalty Game</h1>
-  <p>My game is working! 🎉</p>
-  <button onclick="alert('GOAL! ⚽')">TAKE PENALTY</button>
-</body>
-</html>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mmesoma Football Penalty Game</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+body{
+  font-family:Arial,sans-serif;
+  background:linear-gradient(135deg,#061b11,#0b5d2a);
+  color:white;
+  min-height:100vh;
+  text-align:center;
+}
+
+header{
+  padding:18px 10px;
+  background:rgba(0,0,0,.35);
+}
+
+header h1{
+  font-size:25px;
+}
+
+header p{
+  margin-top:5px;
+  color:#b8ffcf;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  padding:12px;
+  background:#073b20;
+  font-weight:bold;
+}
+
+.screen{
+  display:none;
+  padding:20px 12px;
+  max-width:600px;
+  margin:auto;
+}
+
+.screen.active{
+  display:block;
+}
+
+.card{
+  background:rgba(255,255,255,.09);
+  border-radius:18px;
+  padding:18px;
+  margin:14px 0;
+  box-shadow:0 8px 25px rgba(0,0,0,.25);
+}
+
+button{
+  border:none;
+  border-radius:12px;
+  padding:13px 18px;
+  margin:7px;
+  background:#16c172;
+  color:white;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+button:active{
+  transform:scale(.96);
+}
+
+button.locked{
+  background:#555;
+}
+
+button.gold{
+  background:#f0b90b;
+  color:#111;
+}
+
+button.red{
+  background:#d93636;
+}
+
+.goal{
+  position:relative;
+  width:100%;
+  max-width:430px;
+  height:270px;
+  margin:20px auto;
+  background:
+    linear-gradient(#48a846,#267d31);
+  border:7px solid white;
+  border-bottom:0;
+  border-radius:8px 8px 0 0;
+  overflow:hidden;
+}
+
+.goal::before,
+.goal::after{
+  content:"";
+  position:absolute;
+  background:rgba(255,255,255,.25);
+}
+
+.goal::before{
+  width:2px;
+  height:100%;
+  left:50%;
+}
+
+.goal::after{
+  height:2px;
+  width:100%;
+  top:50%;
+}
+
+.keeper{
+  position:absolute;
+  left:50%;
+  bottom:22px;
+  transform:translateX(-50%);
+  font-size:55px;
+  transition:.3s;
+  z-index:4;
+}
+
+.ball{
+  position:absolute;
+  left:50%;
+  bottom:8px;
+  transform:translateX(-50%);
+  font-size:38px;
+  z-index:5;
+  transition:.7s ease;
+}
+
+.ball.shoot-left{
+  left:18%;
+  bottom:65%;
+}
+
+.ball.shoot-center{
+  left:50%;
+  bottom:72%;
+}
+
+.ball.shoot-right{
+  left:82%;
+  bottom:65%;
+}
+
+.ball.shoot-top{
+  left:50%;
+  bottom:88%;
+}
+
+.target-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.target-buttons button{
+  min-width:100px;
+}
+
+.shop-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+.item{
+  background:rgba(0,0,0,.25);
+  border-radius:15px;
+  padding:15px
