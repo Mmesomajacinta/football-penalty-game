@@ -3,184 +3,841 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mmesoma Football Penalty Game</title>
+<title>Mmesoma Penalty Game</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+* {
+  box-sizing: border-box;
 }
 
-body{
-  font-family:Arial,sans-serif;
-  background:linear-gradient(135deg,#061b11,#0b5d2a);
-  color:white;
-  min-height:100vh;
-  text-align:center;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #064d25, #0b8f43);
+  color: white;
+  text-align: center;
+  min-height: 100vh;
 }
 
-header{
-  padding:18px 10px;
-  background:rgba(0,0,0,.35);
+header {
+  background: #063b1d;
+  padding: 20px 10px;
 }
 
-header h1{
-  font-size:25px;
+header h1 {
+  margin: 0;
+  font-size: 25px;
 }
 
-header p{
-  margin-top:5px;
-  color:#b8ffcf;
+header p {
+  margin: 8px 0 0;
 }
 
-.topbar{
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-  padding:12px;
-  background:#073b20;
-  font-weight:bold;
+.top {
+  display: flex;
+  justify-content: space-around;
+  background: #042b16;
+  padding: 12px 5px;
+  font-weight: bold;
 }
 
-.screen{
-  display:none;
-  padding:20px 12px;
-  max-width:600px;
-  margin:auto;
+.page {
+  display: none;
+  padding: 20px 12px 90px;
+  max-width: 600px;
+  margin: auto;
 }
 
-.screen.active{
-  display:block;
+.page.show {
+  display: block;
 }
 
-.card{
-  background:rgba(255,255,255,.09);
-  border-radius:18px;
-  padding:18px;
-  margin:14px 0;
-  box-shadow:0 8px 25px rgba(0,0,0,.25);
+.card {
+  background: rgba(0,0,0,.25);
+  padding: 20px;
+  margin: 15px 0;
+  border-radius: 18px;
 }
 
-button{
-  border:none;
-  border-radius:12px;
-  padding:13px 18px;
-  margin:7px;
-  background:#16c172;
-  color:white;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
+button {
+  background: #16c172;
+  color: white;
+  border: 0;
+  padding: 13px 18px;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 15px;
+  margin: 6px;
 }
 
-button:active{
-  transform:scale(.96);
+button:active {
+  transform: scale(.95);
 }
 
-button.locked{
-  background:#555;
+.goal {
+  position: relative;
+  width: 100%;
+  max-width: 430px;
+  height: 260px;
+  margin: 20px auto;
+  background: #38a852;
+  border: 7px solid white;
+  border-bottom: 0;
+  overflow: hidden;
 }
 
-button.gold{
-  background:#f0b90b;
-  color:#111;
+.goal:before {
+  content: "";
+  position: absolute;
+  left: 33%;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: rgba(255,255,255,.35);
 }
 
-button.red{
-  background:#d93636;
+.goal:after {
+  content: "";
+  position: absolute;
+  left: 66%;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background: rgba(255,255,255,.35);
 }
 
-.goal{
-  position:relative;
-  width:100%;
-  max-width:430px;
-  height:270px;
-  margin:20px auto;
-  background:
-    linear-gradient(#48a846,#267d31);
-  border:7px solid white;
-  border-bottom:0;
-  border-radius:8px 8px 0 0;
-  overflow:hidden;
+.keeper {
+  position: absolute;
+  left: 50%;
+  bottom: 35px;
+  transform: translateX(-50%);
+  font-size: 55px;
+  transition: .5s;
 }
 
-.goal::before,
-.goal::after{
-  content:"";
-  position:absolute;
-  background:rgba(255,255,255,.25);
+.ball {
+  position: absolute;
+  left: 50%;
+  bottom: 5px;
+  transform: translateX(-50%);
+  font-size: 38px;
+  transition: .6s;
 }
 
-.goal::before{
-  width:2px;
-  height:100%;
-  left:50%;
+.left {
+  left: 18%;
+  bottom: 65%;
 }
 
-.goal::after{
-  height:2px;
-  width:100%;
-  top:50%;
+.center {
+  left: 50%;
+  bottom: 75%;
 }
 
-.keeper{
-  position:absolute;
-  left:50%;
-  bottom:22px;
-  transform:translateX(-50%);
-  font-size:55px;
-  transition:.3s;
-  z-index:4;
+.right {
+  left: 82%;
+  bottom: 65%;
 }
 
-.ball{
-  position:absolute;
-  left:50%;
-  bottom:8px;
-  transform:translateX(-50%);
-  font-size:38px;
-  z-index:5;
-  transition:.7s ease;
+.topshot {
+  left: 50%;
+  bottom: 90%;
 }
 
-.ball.shoot-left{
-  left:18%;
-  bottom:65%;
+.message {
+  min-height: 30px;
+  font-weight: bold;
+  font-size: 18px;
 }
 
-.ball.shoot-center{
-  left:50%;
-  bottom:72%;
+.shop {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
 }
 
-.ball.shoot-right{
-  left:82%;
-  bottom:65%;
+.item {
+  background: rgba(0,0,0,.25);
+  padding: 15px 5px;
+  border-radius: 15px;
 }
 
-.ball.shoot-top{
-  left:50%;
-  bottom:88%;
+.emoji {
+  font-size: 42px;
 }
 
-.target-buttons{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
+.nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #032510;
+  display: flex;
+  justify-content: space-around;
+  padding: 7px 2px;
+  z-index: 10;
 }
 
-.target-buttons button{
-  min-width:100px;
+.nav button {
+  background: transparent;
+  margin: 0;
+  padding: 5px;
+  font-size: 12px;
 }
 
-.shop-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:10px;
+.nav span {
+  display: block;
+  font-size: 20px;
 }
 
-.item{
-  background:rgba(0,0,0,.25);
-  border-radius:15px;
-  padding:15px
+.locked {
+  background: #555;
+}
+
+.reset {
+  background: #c62828;
+}
+
+@media(max-width:400px) {
+  header h1 {
+    font-size: 21px;
+  }
+
+  button {
+    font-size: 13px;
+    padding: 11px 13px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>⚽ MMESOMA PENALTY GAME ⚽</h1>
+  <p>Welcome, Mmesoma! 🏆</p>
+</header>
+
+<div class="top">
+  <div>🪙 <span id="coins">0</span></div>
+  <div>⚽ <span id="goals">0</span> Goals</div>
+  <div>🏆 <span id="wins">0</span> Wins</div>
+</div>
+
+<div id="home" class="page show">
+
+  <div class="card">
+    <h2>⚽ Welcome to the Game!</h2>
+    <p>Take penalties, score goals and earn coins.</p>
+
+    <button onclick="startGame()">
+      ▶️ START MATCH
+    </button>
+  </div>
+
+  <div class="card">
+    <h2>🎁 Your Rewards</h2>
+
+    <p>Every goal = 🪙 25 coins</p>
+    <p>Win a match = 🪙 50 bonus coins</p>
+
+    <p>Use your coins to unlock:</p>
+
+    <p>
+      🧑‍🎤 Players<br>
+      ⚽ Balls<br>
+      👕 Jerseys<br>
+      🥅 Nets<br>
+      👨‍🏫 Coaches
+    </p>
+  </div>
+
+</div>
+
+<div id="game" class="page">
+
+  <div class="card">
+    <h2>🏟️ PENALTY SHOOTOUT</h2>
+
+    <p>
+      Attempt:
+      <span id="attempt">1</span>/5
+    </p>
+
+    <p>
+      Match Goals:
+      <span id="matchGoals">0</span>
+    </p>
+  </div>
+
+  <div class="goal">
+
+    <div id="keeper" class="keeper">
+      🧤
+    </div>
+
+    <div id="ball" class="ball">
+      ⚽
+    </div>
+
+  </div>
+
+  <div id="message" class="message">
+    Choose where to shoot!
+  </div>
+
+  <div>
+
+    <button onclick="shoot('left')">
+      ⬅️ LEFT
+    </button>
+
+    <button onclick="shoot('center')">
+      ⬆️ CENTER
+    </button>
+
+    <button onclick="shoot('right')">
+      ➡️ RIGHT
+    </button>
+
+    <button onclick="shoot('topshot')">
+      🚀 TOP
+    </button>
+
+  </div>
+
+  <button onclick="showPage('home')">
+    🏠 HOME
+  </button>
+
+</div>
+
+<div id="shop" class="page">
+
+  <div class="card">
+    <h2>🛒 REWARD SHOP</h2>
+    <p>Spend your coins to unlock items.</p>
+  </div>
+
+  <div class="shop">
+
+    <div class="item">
+      <div class="emoji">🧑‍🎤</div>
+      <h3>New Player</h3>
+      <p>🪙 100</p>
+
+      <button
+        id="player"
+        onclick="buy('player',100)">
+        UNLOCK
+      </button>
+    </div>
+
+    <div class="item">
+      <div class="emoji">⚽</div>
+      <h3>Golden Ball</h3>
+      <p>🪙 150</p>
+
+      <button
+        id="goldball"
+        onclick="buy('goldball',150)">
+        UNLOCK
+      </button>
+    </div>
+
+    <div class="item">
+      <div class="emoji">👕</div>
+      <h3>New Jersey</h3>
+      <p>🪙 200</p>
+
+      <button
+        id="jersey"
+        onclick="buy('jersey',200)">
+        UNLOCK
+      </button>
+    </div>
+
+    <div class="item">
+      <div class="emoji">🥅</div>
+      <h3>Pro Net</h3>
+      <p>🪙 250</p>
+
+      <button
+        id="net"
+        onclick="buy('net',250)">
+        UNLOCK
+      </button>
+    </div>
+
+    <div class="item">
+      <div class="emoji">👨‍🏫</div>
+      <h3>Super Coach</h3>
+      <p>🪙 300</p>
+
+      <button
+        id="coach"
+        onclick="buy('coach',300)">
+        UNLOCK
+      </button>
+    </div>
+
+    <div class="item">
+      <div class="emoji">🏆</div>
+      <h3>Legend Badge</h3>
+      <p>🪙 500</p>
+
+      <button
+        id="badge"
+        onclick="buy('badge',500)">
+        UNLOCK
+      </button>
+    </div>
+
+  </div>
+
+</div>
+
+<div id="profile" class="page">
+
+  <div class="card">
+
+    <div style="font-size:70px;">
+      👩‍🦱⚽
+    </div>
+
+    <h2>MMESOMA</h2>
+
+    <p>Penalty Champion 🏆</p>
+
+  </div>
+
+  <div class="card">
+
+    <h2>📊 MY STATISTICS</h2>
+
+    <p>
+      Total Goals:
+      <b id="profileGoals">0</b>
+    </p>
+
+    <p>
+      Total Wins:
+      <b id="profileWins">0</b>
+    </p>
+
+    <p>
+      Total Coins:
+      <b id="profileCoins">0</b>
+    </p>
+
+  </div>
+
+  <div class="card">
+
+    <h2>🎁 UNLOCKED ITEMS</h2>
+
+    <p id="items">
+      Nothing unlocked yet.
+    </p>
+
+  </div>
+
+  <button
+    class="reset"
+    onclick="resetGame()">
+    ♻️ RESET PROGRESS
+  </button>
+
+</div>
+
+<div class="nav">
+
+  <button onclick="showPage('home')">
+    <span>🏠</span>
+    Home
+  </button>
+
+  <button onclick="showPage('game')">
+    <span>⚽</span>
+    Play
+  </button>
+
+  <button onclick="showPage('shop')">
+    <span>🛒</span>
+    Shop
+  </button>
+
+  <button onclick="showPage('profile')">
+    <span>👤</span>
+    Profile
+  </button>
+
+</div>
+
+<script>
+
+let saved =
+  localStorage.getItem("mmesomaGame");
+
+let data = saved
+  ? JSON.parse(saved)
+  : {
+      coins: 0,
+      goals: 0,
+      wins: 0,
+      unlocked: []
+    };
+
+let attempt = 1;
+let matchGoals = 0;
+let busy = false;
+
+function save() {
+
+  localStorage.setItem(
+    "mmesomaGame",
+    JSON.stringify(data)
+  );
+
+  update();
+}
+
+function update() {
+
+  document.getElementById("coins").textContent =
+    data.coins;
+
+  document.getElementById("goals").textContent =
+    data.goals;
+
+  document.getElementById("wins").textContent =
+    data.wins;
+
+  document.getElementById("profileGoals").textContent =
+    data.goals;
+
+  document.getElementById("profileWins").textContent =
+    data.wins;
+
+  document.getElementById("profileCoins").textContent =
+    data.coins;
+
+  let names = {
+
+    player: "🧑‍🎤 New Player",
+
+    goldball: "⚽ Golden Ball",
+
+    jersey: "👕 New Jersey",
+
+    net: "🥅 Pro Net",
+
+    coach: "👨‍🏫 Super Coach",
+
+    badge: "🏆 Legend Badge"
+
+  };
+
+  let unlocked =
+    data.unlocked.map(function(item) {
+      return names[item];
+    });
+
+  document.getElementById("items").textContent =
+    unlocked.length > 0
+      ? unlocked.join(" • ")
+      : "Nothing unlocked yet.";
+
+  updateButton("player", "player");
+
+  updateButton("goldball", "goldball");
+
+  updateButton("jersey", "jersey");
+
+  updateButton("net", "net");
+
+  updateButton("coach", "coach");
+
+  updateButton("badge", "badge");
+}
+
+function updateButton(id, item) {
+
+  let button =
+    document.getElementById(id);
+
+  if (data.unlocked.includes(item)) {
+
+    button.textContent =
+      "✅ UNLOCKED";
+
+    button.classList.add("locked");
+
+    button.disabled = true;
+  }
+}
+
+function showPage(id) {
+
+  let pages =
+    document.querySelectorAll(".page");
+
+  pages.forEach(function(page) {
+
+    page.classList.remove("show");
+
+  });
+
+  document
+    .getElementById(id)
+    .classList.add("show");
+
+  update();
+}
+
+function startGame() {
+
+  attempt = 1;
+
+  matchGoals = 0;
+
+  busy = false;
+
+  document.getElementById("attempt").textContent =
+    attempt;
+
+  document.getElementById("matchGoals").textContent =
+    matchGoals;
+
+  document.getElementById("message").textContent =
+    "Choose where to shoot!";
+
+  resetBall();
+
+  showPage("game");
+}
+
+function resetBall() {
+
+  let ball =
+    document.getElementById("ball");
+
+  ball.className = "ball";
+
+  document.getElementById("keeper")
+    .style.transform =
+    "translateX(-50%)";
+}
+
+function shoot(direction) {
+
+  if (busy) {
+    return;
+  }
+
+  busy = true;
+
+  let ball =
+    document.getElementById("ball");
+
+  ball.className =
+    "ball " + direction;
+
+  let choices = [
+    "left",
+    "center",
+    "right"
+  ];
+
+  let keeperDirection =
+    choices[
+      Math.floor(
+        Math.random() * choices.length
+      )
+    ];
+
+  setTimeout(function() {
+
+    if (
+      direction !== keeperDirection &&
+      direction !== "topshot"
+    ) {
+
+      goalScored();
+
+    }
+
+    else if (direction === "topshot") {
+
+      if (Math.random() < 0.75) {
+
+        goalScored();
+
+      }
+
+      else {
+
+        savedBall();
+
+      }
+
+    }
+
+    else {
+
+      savedBall();
+
+    }
+
+  }, 600);
+}
+
+function goalScored() {
+
+  data.goals++;
+
+  data.coins += 25;
+
+  matchGoals++;
+
+  document.getElementById("matchGoals")
+    .textContent =
+    matchGoals;
+
+  document.getElementById("message")
+    .textContent =
+    "⚽ GOOOOOOAL! +25 coins! 🎉";
+
+  save();
+
+  setTimeout(
+    nextAttempt,
+    1200
+  );
+}
+
+function savedBall() {
+
+  document.getElementById("message")
+    .textContent =
+    "🧤 SAVED! The goalkeeper stopped it!";
+
+  setTimeout(
+    nextAttempt,
+    1200
+  );
+}
+
+function nextAttempt() {
+
+  if (attempt >= 5) {
+
+    if (matchGoals >= 3) {
+
+      data.wins++;
+
+      data.coins += 50;
+
+      document.getElementById("message")
+        .textContent =
+        "🏆 YOU WON! +50 BONUS COINS!";
+
+      save();
+
+    }
+
+    else {
+
+      document.getElementById("message")
+        .textContent =
+        "🏁 Match finished. You need 3 goals to win.";
+
+    }
+
+    busy = false;
+
+    setTimeout(function() {
+
+      showPage("home");
+
+    }, 1800);
+
+    return;
+  }
+
+  attempt++;
+
+  document.getElementById("attempt")
+    .textContent =
+    attempt;
+
+  resetBall();
+
+  busy = false;
+}
+
+function buy(item, cost) {
+
+  if (
+    data.unlocked.includes(item)
+  ) {
+    return;
+  }
+
+  if (data.coins < cost) {
+
+    alert(
+      "You need " +
+      cost +
+      " coins. You currently have " +
+      data.coins +
+      " coins."
+    );
+
+    return;
+  }
+
+  data.coins -= cost;
+
+  data.unlocked.push(item);
+
+  save();
+
+  alert(
+    "🎉 Congratulations! Item unlocked!"
+  );
+}
+
+function resetGame() {
+
+  let answer =
+    confirm(
+      "Are you sure you want to delete all your progress?"
+    );
+
+  if (answer) {
+
+    data = {
+
+      coins: 0,
+
+      goals: 0,
+
+      wins: 0,
+
+      unlocked: []
+
+    };
+
+    save();
+
+    showPage("home");
+  }
+}
+
+update();
+
+</script>
+
+</body>
+</html>
