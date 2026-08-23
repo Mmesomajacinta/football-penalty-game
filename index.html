@@ -2,680 +2,594 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Jessy Penalty Champions</title>
 
 <style>
-*{box-sizing:border-box}
+
+*{
+box-sizing:border-box;
+}
 
 body{
- margin:0;
- font-family:Arial,sans-serif;
- background:#071b12;
- color:white;
- text-align:center;
- overflow-x:hidden
+margin:0;
+font-family:Arial,sans-serif;
+background:#061b10;
+color:white;
+text-align:center;
 }
 
 header{
- background:linear-gradient(#092d1a,#04170d);
- padding:14px 10px
+background:#04170d;
+padding:15px;
 }
 
 header h1{
- margin:0;
- font-size:25px;
- color:#fff
+margin:0;
+font-size:24px;
 }
 
 header p{
- margin:5px 0 0;
- color:#b7ffd0
+margin:5px 0;
+color:#baffd0;
 }
 
 .stats{
- display:flex;
- justify-content:space-around;
- background:#03170c;
- padding:10px 4px;
- font-weight:bold;
- font-size:14px
+display:flex;
+justify-content:space-around;
+background:#021008;
+padding:12px 5px;
+font-weight:bold;
 }
 
 .page{
- display:none;
- padding:15px 10px 90px;
- max-width:700px;
- margin:auto
+display:none;
+padding:15px 10px 100px;
+max-width:700px;
+margin:auto;
 }
 
-.page.active{display:block}
+.page.active{
+display:block;
+}
 
 .card{
- background:linear-gradient(145deg,#123d25,#092719);
- border:1px solid rgba(255,255,255,.12);
- border-radius:18px;
- padding:18px;
- margin:12px 0;
- box-shadow:0 8px 25px rgba(0,0,0,.35)
+background:rgba(255,255,255,.08);
+border-radius:18px;
+padding:20px;
+margin:15px 0;
 }
 
 button{
- border:0;
- border-radius:12px;
- padding:13px 16px;
- margin:5px;
- font-weight:bold;
- color:white;
- background:linear-gradient(#22d47b,#07934c);
- box-shadow:0 4px 10px rgba(0,0,0,.3)
+border:0;
+border-radius:12px;
+padding:13px 17px;
+margin:5px;
+font-weight:bold;
+color:white;
+background:linear-gradient(#20d879,#078e49);
+cursor:pointer;
 }
 
 button:active{
- transform:scale(.95)
-}
-
-.gold{
- background:linear-gradient(#ffd85a,#d69c00)
+transform:scale(.95);
 }
 
 .red{
- background:linear-gradient(#ef5757,#a51f1f)
+background:#c92f2f;
+}
+
+.gold{
+background:#e5a900;
+color:#111;
 }
 
 /* STADIUM */
 
+.game{
+position:relative;
+width:100%;
+height:500px;
+border-radius:20px;
+overflow:hidden;
+background:#16753b;
+box-shadow:0 10px 30px rgba(0,0,0,.6);
+}
+
 .stadium{
- position:relative;
- height:430px;
- overflow:hidden;
- border-radius:20px;
- background:
- linear-gradient(#263d53 0 22%,#14283a 22% 31%,#087a35 31% 100%);
- box-shadow:0 10px 30px #000
+position:absolute;
+inset:0;
+width:100%;
+height:100%;
+object-fit:cover;
 }
 
-.crowd{
- position:absolute;
- top:0;
- left:0;
- width:100%;
- height:120px;
- background:
- radial-gradient(circle,#ffd84d 2px,transparent 3px) 0 0/18px 18px,
- radial-gradient(circle,#ff4d4d 2px,transparent 3px) 9px 9px/18px 18px,
- #263d53;
- opacity:.9
+/* GOALKEEPER */
+
+.goalkeeper{
+position:absolute;
+width:105px;
+height:170px;
+object-fit:contain;
+left:50%;
+bottom:175px;
+transform:translateX(-50%);
+z-index:5;
+transition:.6s ease;
 }
 
-/* PITCH */
+/* JESSY */
 
-.pitch{
- position:absolute;
- left:-20%;
- width:140%;
- height:330px;
- bottom:-80px;
- background:
- repeating-linear-gradient(
-  90deg,
-  #087735 0,
-  #087735 38px,
-  #0a813a 38px,
-  #0a813a 76px
- );
- transform:perspective(500px) rotateX(25deg);
- transform-origin:bottom
+.jessy{
+position:absolute;
+width:130px;
+height:210px;
+object-fit:contain;
+left:50%;
+bottom:25px;
+transform:translateX(-50%);
+z-index:6;
 }
 
-.pitchLine{
- position:absolute;
- left:15%;
- right:15%;
- top:8%;
- height:80%;
- border:3px solid rgba(255,255,255,.8)
-}
-
-.penaltyBox{
- position:absolute;
- left:27%;
- right:27%;
- top:8%;
- height:40%;
- border:3px solid rgba(255,255,255,.8);
- border-top:0
-}
-
-.penaltySpot{
- position:absolute;
- left:50%;
- top:46%;
- width:10px;
- height:10px;
- background:white;
- border-radius:50%;
- transform:translate(-50%,-50%)
-}
-
-/* GOAL */
-
-.goal{
- position:absolute;
- top:65px;
- left:50%;
- transform:translateX(-50%);
- width:300px;
- height:170px;
- z-index:3
-}
-
-.net{
- position:absolute;
- inset:0;
- background:
- repeating-linear-gradient(
-  0deg,
-  transparent 0 12px,
-  rgba(255,255,255,.3) 13px 14px
- ),
- repeating-linear-gradient(
-  90deg,
-  transparent 0 14px,
-  rgba(255,255,255,.3) 15px 16px
- );
- border:9px solid white;
- box-shadow:0 8px 20px #000
-}
-
-.goalTop{
- position:absolute;
- top:-9px;
- left:0;
- right:0;
- height:9px;
- background:white
-}
-
-.keeper{
- position:absolute;
- z-index:6;
- left:50%;
- bottom:8px;
- transform:translateX(-50%);
- width:55px;
- height:105px;
- transition:.45s ease
-}
-
-.keeperHead{
- width:35px;
- height:35px;
- margin:auto;
- border-radius:50%;
- background:#9b5d38;
- border:3px solid #552d1b
-}
-
-.keeperBody{
- width:42px;
- height:48px;
- margin:auto;
- background:#e4b400;
- border-radius:12px 12px 8px 8px
-}
-
-.arm{
- position:absolute;
- width:45px;
- height:12px;
- top:48px;
- background:#e4b400;
- border-radius:10px
-}
-
-.arm.leftArm{
- left:-32px;
- transform:rotate(-25deg)
-}
-
-.arm.rightArm{
- right:-32px;
- transform:rotate(25deg)
-}
-
-.leg{
- position:absolute;
- width:13px;
- height:40px;
- background:#222;
- bottom:-30px;
- border-radius:10px
-}
-
-.leg.leftLeg{left:10px}
-.leg.rightLeg{right:10px}
-
-/* PLAYER */
-
-.player{
- position:absolute;
- z-index:7;
- left:50%;
- bottom:45px;
- transform:translateX(-50%);
- width:70px;
- height:150px
-}
-
-.playerHead{
- width:40px;
- height:40px;
- margin:auto;
- border-radius:50%;
- background:#8f5736;
- border:3px solid #522c1c
-}
-
-.hair{
- position:absolute;
- top:-2px;
- left:16px;
- width:40px;
- height:20px;
- border-radius:50% 50% 30% 30%;
- background:#17100c
-}
-
-.playerBody{
- width:48px;
- height:60px;
- margin:3px auto 0;
- background:#e53935;
- border-radius:12px
-}
-
-.shirtNumber{
- font-size:22px;
- font-weight:bold;
- padding-top:15px
-}
-
-.playerArm{
- position:absolute;
- top:50px;
- width:50px;
- height:13px;
- background:#8f5736;
- border-radius:10px
-}
-
-.playerArm.a1{
- left:-20px;
- transform:rotate(20deg)
-}
-
-.playerArm.a2{
- right:-20px;
- transform:rotate(-20deg)
-}
-
-.playerLeg{
- position:absolute;
- top:98px;
- width:16px;
- height:55px;
- background:#111;
- border-radius:10px
-}
-
-.playerLeg.l1{left:18px}
-.playerLeg.l2{right:18px}
+/* BALL */
 
 .ball{
- position:absolute;
- z-index:10;
- left:50%;
- bottom:25px;
- transform:translateX(-50%);
- width:28px;
- height:28px;
- border-radius:50%;
- background:white;
- border:3px solid #111;
- transition:.65s cubic-bezier(.2,.8,.3,1)
+position:absolute;
+width:35px;
+height:35px;
+left:50%;
+bottom:95px;
+transform:translateX(-50%);
+z-index:8;
+transition:.7s cubic-bezier(.2,.8,.3,1);
 }
 
-.ball.goLeft{
- left:25%;
- top:145px;
- bottom:auto
+.ball.left{
+left:25%;
+bottom:340px;
 }
 
-.ball.goCenter{
- left:50%;
- top:115px;
- bottom:auto
+.ball.center{
+left:50%;
+bottom:380px;
 }
 
-.ball.goRight{
- left:75%;
- top:145px;
- bottom:auto
+.ball.right{
+left:75%;
+bottom:340px;
 }
 
-.ball.goTop{
- left:50%;
- top:75px;
- bottom:auto
+.ball.top{
+left:50%;
+bottom:430px;
 }
+
+/* MESSAGE */
 
 .message{
- min-height:28px;
- font-size:18px;
- font-weight:bold;
- margin:8px
-}
-
-.shootButtons{
- display:flex;
- justify-content:center;
- flex-wrap:wrap
-}
-
-.shootButtons button{
- min-width:95px
+min-height:30px;
+font-size:18px;
+font-weight:bold;
+margin:10px;
 }
 
 /* SHOP */
 
 .shop{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:10px
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
 }
 
 .item{
- background:#0b2c1b;
- border-radius:16px;
- padding:15px 5px
+background:rgba(255,255,255,.07);
+border-radius:15px;
+padding:15px 5px;
 }
 
-.itemIcon{
- font-size:42px
+.icon{
+font-size:40px;
 }
 
 .locked{
- background:#555!important
+background:#555!important;
 }
 
 /* NAV */
 
 .nav{
- position:fixed;
- bottom:0;
- left:0;
- width:100%;
- display:flex;
- justify-content:space-around;
- background:#02130a;
- padding:7px 2px;
- z-index:50
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+background:#021008;
+display:flex;
+justify-content:space-around;
+padding:7px;
+z-index:20;
 }
 
 .nav button{
- background:transparent;
- box-shadow:none;
- margin:0;
- padding:5px
+background:transparent;
+margin:0;
+padding:5px;
 }
 
 .nav span{
- display:block;
- font-size:20px
+display:block;
+font-size:20px;
 }
 
-@media(max-width:430px){
- .stadium{height:400px}
- .goal{width:270px}
- header h1{font-size:21px}
- button{font-size:13px;padding:11px}
+@media(max-width:450px){
+
+.game{
+height:450px;
 }
+
+.goalkeeper{
+width:90px;
+height:150px;
+bottom:160px;
+}
+
+.jessy{
+width:115px;
+height:185px;
+bottom:25px;
+}
+
+.ball{
+width:30px;
+height:30px;
+bottom:90px;
+}
+
+.ball.left{
+bottom:310px;
+}
+
+.ball.center{
+bottom:350px;
+}
+
+.ball.right{
+bottom:310px;
+}
+
+.ball.top{
+bottom:390px;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
 <header>
- <h1>⚽ JESSY PENALTY CHAMPIONS ⚽</h1>
- <p>Welcome, Jessy! 🏆</p>
+
+<h1>⚽ JESSY PENALTY CHAMPIONS ⚽</h1>
+
+<p>Welcome, Jessy! 🏆</p>
+
 </header>
 
 <div class="stats">
- <div>🪙 <span id="coins">0</span></div>
- <div>⚽ <span id="goals">0</span></div>
- <div>🏆 <span id="wins">0</span></div>
+
+<div>
+🪙 <span id="coins">0</span>
+</div>
+
+<div>
+⚽ <span id="goals">0</span>
+</div>
+
+<div>
+🏆 <span id="wins">0</span>
+</div>
+
 </div>
 
 <!-- HOME -->
 
 <section id="home" class="page active">
 
- <div class="card">
-  <h2>🏟️ Welcome to Jessy's Stadium</h2>
-  <p>Score penalties, win matches and unlock rewards.</p>
+<div class="card">
 
-  <button onclick="startMatch()">
-   ▶️ START MATCH
-  </button>
- </div>
+<h2>🏟️ JESSY'S STADIUM</h2>
 
- <div class="card">
-  <h3>🎁 Rewards</h3>
-  <p>⚽ Goal = 25 coins</p>
-  <p>🏆 Match win = 50 bonus coins</p>
- </div>
+<p>
+Score penalties, earn coins and unlock amazing rewards!
+</p>
+
+<button onclick="startGame()">
+▶️ START MATCH
+</button>
+
+</div>
+
+<div class="card">
+
+<h3>🎁 REWARDS</h3>
+
+<p>⚽ Goal = 25 coins</p>
+
+<p>🏆 Win = 50 bonus coins</p>
+
+<p>🧑‍🎤 Unlock players</p>
+
+<p>⚽ Unlock balls</p>
+
+<p>👕 Unlock jerseys</p>
+
+<p>🥅 Unlock nets</p>
+
+<p>👨‍🏫 Unlock coaches</p>
+
+</div>
 
 </section>
 
 <!-- GAME -->
 
-<section id="game" class="page">
+<section id="gamePage" class="page">
 
- <div class="card">
-  <h2>🏟️ PENALTY SHOOTOUT</h2>
+<div class="card">
 
-  <p>
-   Attempt:
-   <b id="attempt">1</b>/5
-  </p>
+<h2>⚽ PENALTY SHOOTOUT</h2>
 
-  <p>
-   Match goals:
-   <b id="matchGoals">0</b>
-  </p>
+<p>
 
-  <div class="stadium">
+Attempt:
+<b id="attempt">1</b>/5
 
-   <div class="crowd"></div>
+</p>
 
-   <div class="pitch">
-    <div class="pitchLine"></div>
-    <div class="penaltyBox"></div>
-    <div class="penaltySpot"></div>
-   </div>
+<p>
 
-   <div class="goal">
+Match Goals:
+<b id="matchGoals">0</b>
 
-    <div class="net"></div>
+</p>
 
-    <div id="keeper" class="keeper">
+</div>
 
-     <div class="keeperHead"></div>
+<div class="game">
 
-     <div class="keeperBody"></div>
+<img
+src="1787502378274.png"
+class="stadium"
+alt="Football stadium"
+>
 
-     <div class="arm leftArm"></div>
-     <div class="arm rightArm"></div>
+<img
+src="1787499215950.png"
+class="goalkeeper"
+id="goalkeeper"
+alt="Goalkeeper"
+>
 
-     <div class="leg leftLeg"></div>
-     <div class="leg rightLeg"></div>
+<img
+src="1787498911914.png"
+class="jessy"
+alt="Jessy"
+>
 
-    </div>
+<div
+id="ball"
+class="ball"
+>
+⚽
+</div>
 
-   </div>
+</div>
 
-   <div class="player">
+<div
+id="message"
+class="message"
+>
 
-    <div class="hair"></div>
-    <div class="playerHead"></div>
+Choose where Jessy should shoot!
 
-    <div class="playerBody">
-     <div class="shirtNumber">10</div>
-    </div>
+</div>
 
-    <div class="playerArm a1"></div>
-    <div class="playerArm a2"></div>
+<div>
 
-    <div class="playerLeg l1"></div>
-    <div class="playerLeg l2"></div>
+<button onclick="shoot('left')">
+⬅️ LEFT
+</button>
 
-   </div>
+<button onclick="shoot('center')">
+⬆️ CENTER
+</button>
 
-   <div id="ball" class="ball"></div>
+<button onclick="shoot('right')">
+➡️ RIGHT
+</button>
 
-  </div>
+<button onclick="shoot('top')">
+🚀 TOP
+</button>
 
-  <div id="message" class="message">
-   Choose where Jessy should shoot!
-  </div>
+</div>
 
-  <div class="shootButtons">
-
-   <button onclick="shoot('left')">
-    ⬅️ LEFT
-   </button>
-
-   <button onclick="shoot('center')">
-    ⬆️ CENTER
-   </button>
-
-   <button onclick="shoot('right')">
-    ➡️ RIGHT
-   </button>
-
-   <button onclick="shoot('top')">
-    🚀 TOP
-   </button>
-
-  </div>
-
-  <button class="red" onclick="showPage('home')">
-   🏠 HOME
-  </button>
+<button
+class="red"
+onclick="showPage('home')"
+>
+🏠 HOME
+</button>
 
 </section>
 
 <!-- SHOP -->
 
-<section id="shop" class="page">
+<section id="shopPage" class="page">
 
- <div class="card">
-  <h2>🛒 JESSY'S REWARD SHOP</h2>
-  <p>Use coins to unlock new equipment.</p>
- </div>
+<div class="card">
 
- <div class="shop">
+<h2>🛒 REWARD SHOP</h2>
 
-  <div class="item">
-   <div class="itemIcon">🧑‍🎤</div>
-   <h3>Star Player</h3>
-   <p>🪙 100</p>
-   <button id="playerBtn" onclick="buy('player',100)">
-    UNLOCK
-   </button>
-  </div>
+<p>
+Coins:
+🪙 <b id="shopCoins">0</b>
+</p>
 
-  <div class="item">
-   <div class="itemIcon">⚽</div>
-   <h3>Golden Ball</h3>
-   <p>🪙 150</p>
-   <button id="ballBtn" onclick="buy('ball',150)">
-    UNLOCK
-   </button>
-  </div>
+</div>
 
-  <div class="item">
-   <div class="itemIcon">👕</div>
-   <h3>Champion Jersey</h3>
-   <p>🪙 200</p>
-   <button id="jerseyBtn" onclick="buy('jersey',200)">
-    UNLOCK
-   </button>
-  </div>
+<div class="shop">
 
-  <div class="item">
-   <div class="itemIcon">🥅</div>
-   <h3>Pro Net</h3>
-   <p>🪙 250</p>
-   <button id="netBtn" onclick="buy('net',250)">
-    UNLOCK
-   </button>
-  </div>
+<div class="item">
 
-  <div class="item">
-   <div class="itemIcon">👨‍🏫</div>
-   <h3>Super Coach</h3>
-   <p>🪙 300</p>
-   <button id="coachBtn" onclick="buy('coach',300)">
-    UNLOCK
-   </button>
-  </div>
+<div class="icon">🧑‍🎤</div>
 
-  <div class="item">
-   <div class="itemIcon">🏆</div>
-   <h3>Legend Badge</h3>
-   <p>🪙 500</p>
-   <button id="badgeBtn" onclick="buy('badge',500)">
-    UNLOCK
-   </button>
-  </div>
+<h3>Star Player</h3>
 
- </div>
+<p>🪙 100</p>
+
+<button
+id="playerBtn"
+onclick="buy('player',100)"
+>
+UNLOCK
+</button>
+
+</div>
+
+<div class="item">
+
+<div class="icon">⚽</div>
+
+<h3>Golden Ball</h3>
+
+<p>🪙 150</p>
+
+<button
+id="ballBtn"
+onclick="buy('ball',150)"
+>
+UNLOCK
+</button>
+
+</div>
+
+<div class="item">
+
+<div class="icon">👕</div>
+
+<h3>Champion Jersey</h3>
+
+<p>🪙 200</p>
+
+<button
+id="jerseyBtn"
+onclick="buy('jersey',200)"
+>
+UNLOCK
+</button>
+
+</div>
+
+<div class="item">
+
+<div class="icon">🥅</div>
+
+<h3>Pro Net</h3>
+
+<p>🪙 250</p>
+
+<button
+id="netBtn"
+onclick="buy('net',250)"
+>
+UNLOCK
+</button>
+
+</div>
+
+<div class="item">
+
+<div class="icon">👨‍🏫</div>
+
+<h3>Super Coach</h3>
+
+<p>🪙 300</p>
+
+<button
+id="coachBtn"
+onclick="buy('coach',300)"
+>
+UNLOCK
+</button>
+
+</div>
+
+<div class="item">
+
+<div class="icon">🏆</div>
+
+<h3>Legend Badge</h3>
+
+<p>🪙 500</p>
+
+<button
+id="badgeBtn"
+onclick="buy('badge',500)"
+>
+UNLOCK
+</button>
+
+</div>
+
+</div>
 
 </section>
 
 <!-- PROFILE -->
 
-<section id="profile" class="page">
+<section id="profilePage" class="page">
 
- <div class="card">
+<div class="card">
 
-  <h2>👤 JESSY</h2>
+<h2>👤 JESSY</h2>
 
-  <p>Penalty Champion</p>
+<p>Penalty Champion 🏆</p>
 
-  <p>⚽ Goals: <b id="profileGoals">0</b></p>
+<p>
+⚽ Goals:
+<b id="profileGoals">0</b>
+</p>
 
-  <p>🏆 Wins: <b id="profileWins">0</b></p>
+<p>
+🏆 Wins:
+<b id="profileWins">0</b>
+</p>
 
-  <p>🪙 Coins: <b id="profileCoins">0</b></p>
+<p>
+🪙 Coins:
+<b id="profileCoins">0</b>
+</p>
 
- </div>
+</div>
 
- <div class="card">
+<div class="card">
 
-  <h3>🎁 UNLOCKED</h3>
+<h3>🎁 UNLOCKED ITEMS</h3>
 
-  <p id="items">
-   Nothing unlocked yet.
-  </p>
+<p id="items">
+Nothing unlocked yet.
+</p>
 
- </div>
+</div>
 
- <button class="red" onclick="resetGame()">
-  ♻️ RESET GAME
- </button>
+<button
+class="red"
+onclick="resetGame()"
+>
+♻️ RESET PROGRESS
+</button>
 
 </section>
 
@@ -683,358 +597,404 @@ button:active{
 
 <nav class="nav">
 
- <button onclick="showPage('home')">
-  <span>🏠</span>
-  Home
- </button>
+<button onclick="showPage('home')">
 
- <button onclick="showPage('game')">
-  <span>⚽</span>
-  Play
- </button>
+<span>🏠</span>
 
- <button onclick="showPage('shop')">
-  <span>🛒</span>
-  Shop
- </button>
+Home
 
- <button onclick="showPage('profile')">
-  <span>👤</span>
-  Profile
- </button>
+</button>
+
+<button onclick="showPage('gamePage')">
+
+<span>⚽</span>
+
+Play
+
+</button>
+
+<button onclick="showPage('shopPage')">
+
+<span>🛒</span>
+
+Shop
+
+</button>
+
+<button onclick="showPage('profilePage')">
+
+<span>👤</span>
+
+Profile
+
+</button>
 
 </nav>
 
 <script>
 
-let saved=localStorage.getItem("jessyPenaltyGame");
+let saved=
+localStorage.getItem("jessyPenaltyGame");
 
 let data=saved
- ? JSON.parse(saved)
- : {
-    coins:0,
-    goals:0,
-    wins:0,
-    unlocked:[]
-   };
+?JSON.parse(saved)
+:{
+coins:0,
+goals:0,
+wins:0,
+unlocked:[]
+};
 
 let attempt=1;
+
 let matchGoals=0;
+
 let busy=false;
 
 function save(){
 
- localStorage.setItem(
-  "jessyPenaltyGame",
-  JSON.stringify(data)
- );
+localStorage.setItem(
+"jessyPenaltyGame",
+JSON.stringify(data)
+);
 
- updateUI();
+updateUI();
+
 }
 
 function updateUI(){
 
- document.getElementById("coins").textContent=data.coins;
+document.getElementById("coins")
+.textContent=data.coins;
 
- document.getElementById("goals").textContent=data.goals;
+document.getElementById("goals")
+.textContent=data.goals;
 
- document.getElementById("wins").textContent=data.wins;
+document.getElementById("wins")
+.textContent=data.wins;
 
- document.getElementById("profileGoals").textContent=data.goals;
+document.getElementById("shopCoins")
+.textContent=data.coins;
 
- document.getElementById("profileWins").textContent=data.wins;
+document.getElementById("profileGoals")
+.textContent=data.goals;
 
- document.getElementById("profileCoins").textContent=data.coins;
+document.getElementById("profileWins")
+.textContent=data.wins;
 
- let names={
-  player:"🧑‍🎤 Star Player",
-  ball:"⚽ Golden Ball",
-  jersey:"👕 Champion Jersey",
-  net:"🥅 Pro Net",
-  coach:"👨‍🏫 Super Coach",
-  badge:"🏆 Legend Badge"
- };
+document.getElementById("profileCoins")
+.textContent=data.coins;
 
- let list=data.unlocked.map(function(x){
-  return names[x];
- });
+let names={
 
- document.getElementById("items").textContent=
-  list.length
-   ? list.join(" • ")
-   : "Nothing unlocked yet.";
+player:"🧑‍🎤 Star Player",
 
- updateShopButton("playerBtn","player");
- updateShopButton("ballBtn","ball");
- updateShopButton("jerseyBtn","jersey");
- updateShopButton("netBtn","net");
- updateShopButton("coachBtn","coach");
- updateShopButton("badgeBtn","badge");
+ball:"⚽ Golden Ball",
+
+jersey:"👕 Champion Jersey",
+
+net:"🥅 Pro Net",
+
+coach:"👨‍🏫 Super Coach",
+
+badge:"🏆 Legend Badge"
+
+};
+
+let list=data.unlocked.map(
+item=>names[item]
+);
+
+document.getElementById("items")
+.textContent=list.length
+?list.join(" • ")
+:"Nothing unlocked yet.";
+
+updateButton("playerBtn","player");
+
+updateButton("ballBtn","ball");
+
+updateButton("jerseyBtn","jersey");
+
+updateButton("netBtn","net");
+
+updateButton("coachBtn","coach");
+
+updateButton("badgeBtn","badge");
+
 }
 
-function updateShopButton(id,item){
+function updateButton(id,item){
 
- let btn=document.getElementById(id);
+let btn=document.getElementById(id);
 
- if(data.unlocked.includes(item)){
+if(data.unlocked.includes(item)){
 
-  btn.textContent="✅ UNLOCKED";
+btn.textContent="✅ UNLOCKED";
 
-  btn.classList.add("locked");
+btn.classList.add("locked");
 
-  btn.disabled=true;
- }
+btn.disabled=true;
+
+}
+
 }
 
 function showPage(id){
 
- document
-  .querySelectorAll(".page")
-  .forEach(function(page){
-   page.classList.remove("active");
-  });
+document
+.querySelectorAll(".page")
+.forEach(
+page=>page.classList.remove("active")
+);
 
- document
-  .getElementById(id)
-  .classList.add("active");
+document
+.getElementById(id)
+.classList.add("active");
 
- updateUI();
+updateUI();
+
 }
 
-function startMatch(){
+function startGame(){
 
- attempt=1;
- matchGoals=0;
- busy=false;
+attempt=1;
 
- document.getElementById("attempt")
-  .textContent=attempt;
+matchGoals=0;
 
- document.getElementById("matchGoals")
-  .textContent=matchGoals;
+busy=false;
 
- document.getElementById("message")
-  .textContent=
-  "Choose where Jessy should shoot!";
+document.getElementById("attempt")
+.textContent=attempt;
 
- resetBall();
+document.getElementById("matchGoals")
+.textContent=matchGoals;
 
- showPage("game");
+document.getElementById("message")
+.textContent=
+"Choose where Jessy should shoot!";
+
+resetBall();
+
+showPage("gamePage");
+
 }
 
 function resetBall(){
 
- let ball=document.getElementById("ball");
+let ball=document.getElementById("ball");
 
- ball.className="ball";
+ball.className="ball";
 
- let keeper=document.getElementById("keeper");
+let keeper=
+document.getElementById("goalkeeper");
 
- keeper.style.transform=
-  "translateX(-50%)";
+keeper.style.transform=
+"translateX(-50%)";
+
 }
 
 function shoot(direction){
 
- if(busy)return;
+if(busy)return;
 
- busy=true;
+busy=true;
 
- let ball=document.getElementById("ball");
+let ball=document.getElementById("ball");
 
- if(direction==="left"){
-  ball.className="ball goLeft";
- }
+ball.className=
+"ball "+direction;
 
- if(direction==="center"){
-  ball.className="ball goCenter";
- }
+let keeperChoices=[
+"left",
+"center",
+"right"
+];
 
- if(direction==="right"){
-  ball.className="ball goRight";
- }
+let keeperDirection=
+keeperChoices[
+Math.floor(
+Math.random()*keeperChoices.length
+)
+];
 
- if(direction==="top"){
-  ball.className="ball goTop";
- }
+setTimeout(function(){
 
- let keeperChoices=[
-  "left",
-  "center",
-  "right"
- ];
+if(
+direction==="top" ||
+direction!==keeperDirection
+){
 
- let keeperDirection=
-  keeperChoices[
-   Math.floor(
-    Math.random()*keeperChoices.length
-   )
-  ];
+scoreGoal();
 
- setTimeout(function(){
+}else{
 
-  if(direction==="top"){
+saveShot();
 
-   if(Math.random()<0.8){
-    scoreGoal();
-   }else{
-    saveShot();
-   }
-
-  }else if(direction!==keeperDirection){
-
-   scoreGoal();
-
-  }else{
-
-   moveKeeper(keeperDirection);
-
-   saveShot();
-
-  }
-
- },650);
 }
 
-function moveKeeper(direction){
+},650);
 
- let keeper=
-  document.getElementById("keeper");
-
- if(direction==="left"){
-  keeper.style.transform=
-   "translateX(-50%) translateX(-85px)";
- }
-
- if(direction==="right"){
-  keeper.style.transform=
-   "translateX(-50%) translateX(85px)";
- }
-
- if(direction==="center"){
-  keeper.style.transform=
-   "translateX(-50%) translateY(-15px)";
- }
 }
 
 function scoreGoal(){
 
- data.goals++;
+data.goals++;
 
- data.coins+=25;
+data.coins+=25;
 
- matchGoals++;
+matchGoals++;
 
- document.getElementById("matchGoals")
-  .textContent=matchGoals;
+document.getElementById("matchGoals")
+.textContent=matchGoals;
 
- document.getElementById("message")
-  .textContent=
-  "⚽ GOOOOAL! +25 coins! 🔥";
+document.getElementById("message")
+.textContent=
+"⚽ GOOOOOAL! +25 coins! 🔥";
 
- save();
+save();
 
- setTimeout(nextAttempt,1200);
+setTimeout(nextAttempt,1200);
+
 }
 
 function saveShot(){
 
- document.getElementById("message")
-  .textContent=
-  "🧤 SAVED! Great goalkeeping!";
+let keeper=
+document.getElementById("goalkeeper");
 
- setTimeout(nextAttempt,1200);
+let ball=
+document.getElementById("ball");
+
+if(ball.classList.contains("left")){
+
+keeper.style.transform=
+"translateX(-50%) translateX(-100px) rotate(-20deg)";
+
+}
+
+else if(ball.classList.contains("right")){
+
+keeper.style.transform=
+"translateX(-50%) translateX(100px) rotate(20deg)";
+
+}
+
+else{
+
+keeper.style.transform=
+"translateX(-50%) translateY(-20px)";
+
+}
+
+document.getElementById("message")
+.textContent=
+"🧤 SAVED! Great save!";
+
+setTimeout(nextAttempt,1200);
+
 }
 
 function nextAttempt(){
 
- if(attempt>=5){
+if(attempt>=5){
 
-  if(matchGoals>=3){
+if(matchGoals>=3){
 
-   data.wins++;
+data.wins++;
 
-   data.coins+=50;
+data.coins+=50;
 
-   document.getElementById("message")
-    .textContent=
-    "🏆 JESSY WINS! +50 BONUS COINS!";
+document.getElementById("message")
+.textContent=
+"🏆 JESSY WINS! +50 BONUS COINS!";
 
-   save();
+save();
 
-  }else{
+}else{
 
-   document.getElementById("message")
-    .textContent=
-    "🏁 Match finished. Try again!";
+document.getElementById("message")
+.textContent=
+"🏁 Match finished. Try again!";
 
-  }
+}
 
-  busy=false;
+busy=false;
 
-  setTimeout(function(){
-   showPage("home");
-  },1800);
+setTimeout(
+()=>showPage("home"),
+1800
+);
 
-  return;
- }
+return;
 
- attempt++;
+}
 
- document.getElementById("attempt")
-  .textContent=attempt;
+attempt++;
 
- resetBall();
+document.getElementById("attempt")
+.textContent=attempt;
 
- busy=false;
+resetBall();
+
+busy=false;
+
 }
 
 function buy(item,cost){
 
- if(data.unlocked.includes(item)){
-  return;
- }
+if(
+data.unlocked.includes(item)
+)return;
 
- if(data.coins<cost){
+if(data.coins<cost){
 
-  alert(
-   "You need "+cost+
-   " coins. You currently have "+
-   data.coins+" coins."
-  );
+alert(
+"You need "+
+cost+
+" coins. You currently have "+
+data.coins+
+" coins."
+);
 
-  return;
- }
+return;
 
- data.coins-=cost;
+}
 
- data.unlocked.push(item);
+data.coins-=cost;
 
- save();
+data.unlocked.push(item);
 
- alert(
-  "🎉 Congratulations Jessy! "+
-  "You unlocked this reward!"
- );
+save();
+
+alert(
+"🎉 Congratulations Jessy! "+
+"You unlocked your reward!"
+);
+
 }
 
 function resetGame(){
 
- if(confirm(
-  "Are you sure you want to delete all your progress?"
- )){
+if(
+confirm(
+"Are you sure you want to reset all progress?"
+)
+){
 
-  data={
-   coins:0,
-   goals:0,
-   wins:0,
-   unlocked:[]
-  };
+data={
+coins:0,
+goals:0,
+wins:0,
+unlocked:[]
+};
 
-  save();
+save();
 
-  showPage("home");
- }
+showPage("home");
+
+}
+
 }
 
 updateUI();
